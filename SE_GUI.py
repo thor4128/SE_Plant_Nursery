@@ -1,7 +1,9 @@
 import sys
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QPushButton, QMessageBox, QDialog, QLabel, QLineEdit, QDialogButtonBox, QComboBox
+    QApplication, QWidget, QVBoxLayout, QPushButton, QMessageBox, QDialog, QLabel, QLineEdit, QDialogButtonBox, QComboBox, QMainWindow
 )
+
+
 
 #first window you see
 class MyApp(QWidget):
@@ -9,6 +11,8 @@ class MyApp(QWidget):
         super().__init__()
         self.initUI()
 
+        #messing around with scope leave this for now
+        self.output_display = None
     def initUI(self):
         #Window properties
         self.setWindowTitle('Garden Management App')
@@ -42,7 +46,7 @@ class MyApp(QWidget):
             self.open_garden_dimensions_dialog(environment)     #method call
             
     #need a seperate call to get text selection
-    def open_garden_dimensions_dialog(self, environment):
+    def open_garden_dimensions_dialog(self, enviroment):
         # Open garden dimensions input dialog
         dialog = garden_dimensions_dialog(self)
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -59,8 +63,15 @@ class MyApp(QWidget):
             #)
 #???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
             #in construction
-            self.output_display = output_window(self.environment, self.garden_size)
-            output_display.show()
+            self.load_information_for_output(enviroment, garden_size)
+            
+    #load inputs method for output display
+    def load_information_for_output(self, enviroment, garden_size):
+        print("im here 1")
+        self.output_display = output_window(enviroment, garden_size)
+        print("im here 2")
+        self.output_display.show()
+        
     #update exsisting garden section
     def update_garden(self):
         # Action for "Update Existing Garden" button
@@ -131,27 +142,19 @@ class garden_dimensions_dialog(QDialog):
 #Third pop up window
 #output
 class output_window(QWidget):
-
-    def __init__(self, enviroment, garden_size):
-        super().__init__()
+    def __init__(self, environment, garden_size, parent=None):
+        super().__init__(parent)
 
         #Window properties
-        self.setWindowTitle('Garden Management App')
+        self.setWindowTitle('Recommendations')
         self.resize(600, 600)
 
         #Layout
         layout = QVBoxLayout()
 
-        #Buttons
-        btn_input = QPushButton('Input Measurements for New Garden', self)
-        btn_input.clicked.connect(self.open_indoor_outdoor_dialog)  #method call
-
-        btn_update = QPushButton('Update Existing Garden', self)
-        btn_update.clicked.connect(self.update_garden)              #method call
-
-        #Add buttons to layout
-        layout.addWidget(btn_input)
-        layout.addWidget(btn_update)
+        #Add labels to display the environment and garden size
+        layout.addWidget(QLabel(f"Environment: {environment}", self))
+        layout.addWidget(QLabel(f"Garden Measurements: {garden_size}", self))
 
         #Set layout for the main window
         self.setLayout(layout)
