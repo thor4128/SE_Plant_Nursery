@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Size: small: 0.25-0.5 m, medium: 0.51-0.76 m, large: 1.14-1.4 m-->
+<!--light: low: 4-6 hours indirect, medium: 6-8 hours indirect, high: 8-12 hours direct-->
+<plants>
+    <indoor>
+        <plant>
+            <name>Snake Plant</name>
+            <size>small</size>
+            <care>
+                <light>low</light>
+            </care>
+        </plant>
+        <plant>
+            <name>ZZ Plant</name>
+            <size>small</size>
+            <care>
+                <light>low</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Peace Lily</name>
+            <size>small</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Philodendron</name>
+            <size>medium</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Orchid</name>
+            <size>small</size>
+            <care>
+                <light>high</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Mini Monstera</name>
+            <size>small</size>
+            <care>
+                <light>high</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Peperomia Watermelon</name>
+            <size>small</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Spider Plant</name>
+            <size>medium</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Anthurium</name>
+            <size>medium</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Money Tree</name>
+            <size>medium</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Hoya</name>
+            <size>medium</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Fern</name>
+            <size>medium</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Bamboo</name>
+            <size>medium</size>
+            <care>
+                <light>low</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Fiddle Leaf Fig</name>
+            <size>large</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Bird of Pardise</name>
+            <size>large</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Rubber Plant</name>
+            <size>large</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Monstera</name>
+            <size>large</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Corn Plant</name>
+            <size>large</size>
+            <care>
+                <light>medium</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Dragon Tree</name>
+            <size>large</size>
+            <care>
+                <light>low</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Yucca Elephantipes</name>
+            <size>large</size>
+            <care>
+                <light>bright</light>
+            </care>
+        </plant>
+        <plant>
+            <name>Cast Iron Plant</name>
+            <size>large</size>
+            <care>
+                <light>low</light>
+            </care>
+        </plant>
+    </indoor>
+</plants>

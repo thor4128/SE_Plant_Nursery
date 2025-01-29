@@ -1,0 +1,15 @@
+C:\Users\Owner\SE_Plant_Nursery\bin\Debug\net9.0\SE_backend.exe
+C:\Users\Owner\SE_Plant_Nursery\bin\Debug\net9.0\SE_backend.deps.json
+C:\Users\Owner\SE_Plant_Nursery\bin\Debug\net9.0\SE_backend.runtimeconfig.json
+C:\Users\Owner\SE_Plant_Nursery\bin\Debug\net9.0\SE_backend.dll
+C:\Users\Owner\SE_Plant_Nursery\bin\Debug\net9.0\SE_backend.pdb
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.AssemblyInfoInputs.cache
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.AssemblyInfo.cs
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.csproj.CoreCompileInputs.cache
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.sourcelink.json
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.dll
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\refint\SE_backend.dll
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.pdb
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\SE_backend.genruntimeconfig.cache
+C:\Users\Owner\SE_Plant_Nursery\obj\Debug\net9.0\ref\SE_backend.dll
