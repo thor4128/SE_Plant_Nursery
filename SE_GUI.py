@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QMessageBox, QDialog, QLabel, QLineEdit, QDialogButtonBox, QComboBox
 )
 import subprocess
+import json
 #import SE_backend.cs
 
 #first window you see
@@ -160,9 +161,9 @@ class MyApp(QWidget):
             
     #load inputs method for output display
     def load_information_for_output(self, enviroment, garden_size):
-        print("im here 1")
+        #print("im here 1")
         self.output_display = output_window(enviroment, garden_size)
-        print("im here 2")
+        #print("im here 2")
         self.output_display.show()
         
     #update exsisting garden section
@@ -243,7 +244,13 @@ class output_window(QWidget):
         #call c# file to do process
         list = subprocess.run(["dotnet", "run", "--", environment, garden_size], capture_output=True, text=True)
         
-        print(list.stdout)
+        #parse list from c# file
+        try:
+            parsing_list = json.loads(list.stdout.strip())
+        except json.JSONDecodeError:
+            parsing_list = ["nope didnt work"]
+            
+        print(parsing_list)
         
         #Window properties
         self.setWindowTitle('Recommendations')
