@@ -1,3 +1,8 @@
+#Author Kody Ryant
+#Software Engineering
+#GUI for control over selection of garden bed size and enviroment to send to C# file to 
+#give plant recomendations for that garden bed on an output window of this GUI
+
 import sys
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
@@ -9,13 +14,14 @@ import json
 #import SE_backend.cs
 
 #first window you see
-class MyApp(QWidget):
+class first_window(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
 
         #messing around with scope leave this for now
         self.output_display = None
+        
     def initUI(self):
         #Window properties
         self.setWindowTitle('Garden Management App')
@@ -234,6 +240,311 @@ class garden_dimensions_dialog(QDialog):
 
         self.setLayout(layout)
         
+        
+#integrated code here with plant panel
+class plant_panel(QWidget):
+    
+    i = -1
+    name = None
+    parent = None
+    alias = None
+    image = None
+    plantSize = float(100)
+    environment = None
+    count = 0
+    selectButton = None
+    deselectButton = None
+    nameLabel = None
+    countLabel = None
+    errorMsg = None
+    header = None
+    gardenSizeRemaining = float(100)
+    
+    def __init__(self, parent, i, name, alias, image, plantSize, environment, count):
+        super().__init__(parent)
+        self.parent = parent
+        self.i = i
+        self.name = name
+        self.alias = alias
+        self.image = image
+        self.plantSize = plantSize
+        self.environment = environment
+        self.count = count
+        self.setObjectName(f"{name}")
+        
+    def plantDecrement(self):
+        if self.i == -1: return
+        
+        if self.count <= 0:
+            return
+        
+        plant_panel.errorMsg.setText("")
+        
+        plant_panel.gardenSizeRemaining += self.plantSize
+        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {plant_panel.gardenSizeRemaining}")
+        self.count -= 1
+        
+        self.nameLabel.setText(f"{self.count}x {self.name}")
+        self.countLabel.setText(f"{self.count}")
+        
+        if self.count == 0:
+            
+            #print(2)
+            self.setStyleSheet("background-color:none; color:#556B2F;")
+            """self.setStyleSheet('''
+                             #PlantPanel {
+                                 background-color:#D4F4DD;
+                                 color:#556B2F;
+                                 border: none;
+                             }
+                             
+                             ''')"""
+    
+    def plantIncrement(self):
+        #print(2)
+        #print(0)
+        if self.i == -1: return
+        if plant_panel.gardenSizeRemaining - self.plantSize < 0:
+            # add message and cancel
+            
+            #errorMsg = QLabel("Garden Size Exceeded!", self)
+            #errorMsg.setStyleSheet("color: red; font-size: 12px;")
+            plant_panel.errorMsg.setText("This plant doesn't fit!")
+            return
+        
+        #print(1)
+        plant_panel.errorMsg.setText("")
+        # otherwise do normal stuff
+        plant_panel.gardenSizeRemaining -= self.plantSize
+        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}")
+
+        self.count += 1
+        #print(2)
+        self.nameLabel.setText(f"{self.count}x {self.name}")
+        #print(3)
+        self.countLabel.setText(f"{self.count}")
+        #print(4)
+        if self.count >= 1:
+            #print(1)
+            #self.setStyleSheet("background-color:#D4F4DD; color:#556B2F;")
+            self.setStyleSheet("background-color:#D4F4DD; color:#556B2F;")
+            """self.setStyleSheet('''
+                               #'''+self.name+''' {
+                                 border: 2px solid white;
+                                 border-radius: 5px;
+                                 background-color: #D4F4DD;
+                               }
+                             ''')"""
+        
+    
+    def build(self):
+        #self.panels[i] = plantPanel
+        panelLayout = QVBoxLayout()
+        panelLayout.setContentsMargins(0, 0, 0, 0)
+        panelLayout.setSpacing(0)
+        panelLayout.setAlignment(Qt.AlignCenter)
+        #print(panelLayout.getContentsMargins())
+        self.setFixedWidth(300)
+        self.setStyleSheet('''
+                            QWidget {
+                                background-color:none;
+                                color:#556B2F;
+                            }
+                            
+                            ''')
+        
+        
+        
+        
+        # Name panel: Contains name and alias info
+        namePanel = QWidget(self)
+        nameLayout = QVBoxLayout()
+        nameLayout.setContentsMargins(0, 0, 0, 0)
+        nameLayout.setSpacing(0)
+        nameLayout.setAlignment(Qt.AlignTop)
+        namePanel.setFixedHeight(90)
+        self.nameLabel = QLabel(f"{self.count}x {self.name}", namePanel)
+        self.nameLabel.setFixedHeight(60)
+        self.nameLabel.setAlignment(Qt.AlignBottom | Qt.AlignCenter)
+        self.nameLabel.setFont(QFont('Garamond', 16, QFont.Bold))
+        nameLayout.addWidget(self.nameLabel)
+        #print(1)
+        aliasLabel = QLabel(f"(Alias: {self.alias})", namePanel)
+        aliasLabel.setFixedHeight(30)
+        aliasLabel.setFont(QFont('Garamond', 12, QFont.Bold))
+        aliasLabel.setAlignment(Qt.AlignCenter | Qt.AlignTop)
+        nameLayout.addWidget(aliasLabel)
+        #print(2)
+        namePanel.setLayout(nameLayout)
+        panelLayout.addWidget(namePanel)
+        #print(3)
+        # Gallery panel: Contains image of plant and button to show more images
+        galleryPanel = QWidget(self)
+        galleryLayout = QVBoxLayout()
+        galleryLayout.setContentsMargins(0, 0, 0, 0)
+        galleryLayout.setSpacing(0)
+        galleryLayout.setAlignment(Qt.AlignTop)
+        galleryPanel.setFixedHeight(270)
+        galleryPanel.setLayout(galleryLayout)
+        #print(4)
+        mainPlantImage = QLabel(galleryPanel)
+        #print(5)
+        #print(self.image)
+        imagePixmap = QPixmap(self.image)
+        #print(6)
+        mainPlantImage.setPixmap(imagePixmap)
+        #print(7)
+        mainPlantImage.setFixedHeight(200)
+        #print(8)
+        mainPlantImage.setScaledContents(True)
+        #print(9)
+        galleryLayout.addWidget(mainPlantImage)
+        #print(10)
+        gallerySeeMoreOption = QWidget(galleryPanel)
+        gallerySeeMoreLayout = QHBoxLayout()
+        gallerySeeMoreLayout.setContentsMargins(0, 0, 0, 0)
+        gallerySeeMoreLayout.setSpacing(0)
+        gallerySeeMoreOption.setFixedHeight(70)
+        
+        generalPlantImage = QLabel(gallerySeeMoreOption)
+        generalPlantImage.setPixmap(imagePixmap) # TODO Set to same as main plant - change to be the default picture
+        generalPlantImage.setFixedWidth(40)
+        generalPlantImage.setFixedHeight(40)
+        generalPlantImage.setScaledContents(True)
+        gallerySeeMoreLayout.addWidget(generalPlantImage)
+        galleryButton = QPushButton('Show Gallery', gallerySeeMoreOption)
+        galleryButton.setFixedWidth(140)
+        galleryButton.setFixedHeight(40)
+        galleryButton.setStyleSheet('''
+                                    QPushButton {
+        background-color:#B0B0B0;  /* yellow background */
+        color: white;               /* White text */
+        border: 2px solid #9C9C9C;  /* Darker yellow border */
+        border-radius: 12px;        /* Rounded corners */
+        padding: 10px 24px;         /* Padding inside the button */
+        font-size: 14px;            /* Font size */
+    }
+    QPushButton:hover {
+        background-color: #9C9C9C;  /* Darker yellow when hovered */
+        border: 2px solid #808080;  /* Darker border when hovered */
+    }
+    QPushButton:pressed {
+        background-color:#808080;  /* Even darker yellow when pressed */
+        border: 2px solid#6A6A6A;  /* Darker border when pressed */
+    }
+                                    ''')
+        
+        gallerySeeMoreLayout.addWidget(galleryButton)
+        gallerySeeMoreOption.setLayout(gallerySeeMoreLayout)
+        galleryLayout.addWidget(gallerySeeMoreOption)
+        galleryPanel.setLayout(galleryLayout)
+        
+        
+        panelLayout.addWidget(galleryPanel)
+        
+        
+        # Property panel: Contains general property info of each plant
+        propertyPanel = QWidget(self)
+        propertyLayout = QVBoxLayout()
+        propertyLayout.setContentsMargins(0, 0, 0, 0)
+        propertyLayout.setSpacing(0)
+        propertyLayout.setAlignment(Qt.AlignCenter)
+        propertyPanel.setFixedHeight(50)
+        #print("steve")
+        sizeLabel = QLabel(f"Size: {self.plantSize}", propertyPanel)
+        sizeLabel.setFixedHeight(25)
+        sizeLabel.setAlignment(Qt.AlignCenter)
+        sizeLabel.setFont(QFont('Garamond', 12, QFont.Bold))
+        propertyLayout.addWidget(sizeLabel)
+        
+        environmentLabel = QLabel(f"Environment: {self.environment}", propertyPanel)
+        environmentLabel.setFixedHeight(25)
+        environmentLabel.setFont(QFont('Garamond', 12, QFont.Bold))
+        #environmentLabel.setAlignment(Qt.AlignCenter)
+        propertyLayout.addWidget(environmentLabel)
+        
+        propertyPanel.setLayout(propertyLayout)
+        panelLayout.addWidget(propertyPanel)
+        
+        
+        
+        
+        # Select Button - MUST BE BLUE
+        selectPanel = QWidget(self)
+        selectLayout = QHBoxLayout()
+        selectLayout.setContentsMargins(0, 0, 0, 0)
+        selectLayout.setSpacing(0)
+        selectLayout.setAlignment(Qt.AlignCenter)
+        selectPanel.setFixedHeight(70)
+        #print("Waffle")
+        self.selectButton = QPushButton("+1", selectPanel) # need to track?
+        self.deselectButton = QPushButton("-1", selectPanel)
+        self.countLabel = QLabel("0", selectPanel)
+        self.countLabel.setFixedWidth(50)
+        self.countLabel.setStyleSheet("font-size: 24px;")
+        self.countLabel.setAlignment(Qt.AlignCenter)
+        #self.buttons[i] = selectButton
+        self.selectButton.setFixedHeight(50)
+        self.selectButton.setFixedWidth(50)
+        self.deselectButton.setFixedHeight(50)
+        self.deselectButton.setFixedWidth(50)
+        self.selectButton.setStyleSheet(
+        '''
+            QPushButton {
+                background-color: #008CBA;  /* Blue background */
+                color: white;               /* White text */
+                border: 2px solid #007B9A;  /* Darker blue border */
+                border-radius: 12px;        /* Rounded corners */
+                padding: 5px 12px;         /* Padding inside the button */
+                font-size: 16px;            /* Font size */
+            }
+            QPushButton:hover {
+                background-color: #007B9A;  /* Darker blue when hovered */
+                border: 2px solid #005F73;  /* Darker border when hovered */
+            }
+            QPushButton:pressed {
+                background-color: #005F73;  /* Even darker blue when pressed */
+                border: 2px solid #004E5A;  /* Darker border when pressed */
+            }
+        '''
+            
+        )
+        
+        self.deselectButton.setStyleSheet(
+        '''
+            QPushButton {
+                background-color: #008CBA;  /* Blue background */
+                color: white;               /* White text */
+                border: 2px solid #007B9A;  /* Darker blue border */
+                border-radius: 12px;        /* Rounded corners */
+                padding: 5px 12px;         /* Padding inside the button */
+                font-size: 16px;            /* Font size */
+            }
+            QPushButton:hover {
+                background-color: #007B9A;  /* Darker blue when hovered */
+                border: 2px solid #005F73;  /* Darker border when hovered */
+            }
+            QPushButton:pressed {
+                background-color: #005F73;  /* Even darker blue when pressed */
+                border: 2px solid #004E5A;  /* Darker border when pressed */
+            }
+        '''
+            
+        )
+        #print(1)
+        self.selectButton.clicked.connect(self.plantIncrement)
+        self.deselectButton.clicked.connect(self.plantDecrement)
+        #print(3)
+        #selectButton.setAlignment(Qt.AlignCenter)
+        selectLayout.addWidget(self.deselectButton)
+        selectLayout.addWidget(self.countLabel)
+        selectLayout.addWidget(self.selectButton)
+        selectPanel.setLayout(selectLayout)
+        
+        panelLayout.addWidget(selectPanel)
+        
+        self.setLayout(panelLayout)
+        
 #Third pop up window
 #output
 class output_window(QWidget):
@@ -243,34 +554,235 @@ class output_window(QWidget):
         #????????????????????????????????????????????????????????????????????????????????????????????????????
         #call c# file to do process
         list = subprocess.run(["dotnet", "run", "--", environment, garden_size], capture_output=True, text=True)
+        #can be this 
+        
+        #list = subprocess.run(["dotnet", "exec", "bin/Debug/net9.0/SE_backend.dll", environment, garden_size], capture_output=True, text=True)
         
         #parse list from c# file
-        try:
-            parsing_list = json.loads(list.stdout.strip())
-        except json.JSONDecodeError:
-            parsing_list = ["nope didnt work"]
-            
-        print(parsing_list)
+        #print(list.stdout)
+        name_length_care_image_list = list.stdout.split("name:")
+        name_length_care_image_list.pop()
+        #print(name_care_list)
         
+        name_list =   []
+        length_list = []
+        care_list =   []
+        image_list =  []        
+
+        for entry in name_length_care_image_list:
+            
+            length_index = entry.find("length:")
+            care_index = entry.find("care:")
+            image_index = entry.find("image:")
+            
+            names = entry[:length_index].strip().split(", ")
+            lengths = [x.strip() for x in entry[length_index + len("length:"):care_index].strip().split(",")]
+            care = entry[care_index + len("care:"):image_index].strip()
+            images = entry[image_index + len("image:"):].strip().split(", ")
+            
+            name_list.append(names)
+            length_list.append(lengths)
+            care_list.append(care)
+            image_list.append(images)
+        
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #will need to worry about length section here as well
+            
+        name_list.pop(0)
+        length_list.pop(0)
+        care_list.pop(0)
+        image_list.pop(0)
+        
+        #when using this later just want first 5 entries
+        #print(name_list)#name list will be 5 names at index 0, 5 names at index 1 and so on
+        #print("\n")
+        #print(length_list)
+        print("\n")
+        print(care_list)#care list will be sunlight, water, design tip
+        #print("\n")
+        #print(image_list)
+        #print("\n")
+        #print(name_list[0])
+        #names_to_show = name_list[0]
+        #print(names_to_show[0]) #this works for first index use this
+        
+        #parse garden size 
+        garden_sizes_lowercase = garden_size.lower()
+        sizes = garden_sizes_lowercase.split('x')
+        length = sizes[0]
+        double_length = float(length)
+        plant_panel.gardenSizeRemaining = double_length
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #integrating code here
+        
+        collection_count = 0
+        
+        names_to_show = name_list[collection_count]
+        length_to_show = length_list[collection_count]
+        #just send care no need to show here its next window
+        images_to_show = image_list[collection_count]
+        
+        double_length_to_show_0 = float(length_to_show[0])
+        double_length_to_show_1 = float(length_to_show[1])
+        double_length_to_show_2 = float(length_to_show[2])
+        double_length_to_show_3 = float(length_to_show[3])
+        double_length_to_show_4 = float(length_to_show[4])
+        
+        #all fields will always have 5 values make sure xml is structured accordingly
+        plants = [
+            [names_to_show[0], names_to_show[1], names_to_show[2], names_to_show[3], names_to_show[4]],#name
+            ["delete", "delete", "delete", "delete", "delete"], # altname
+            [environment, environment, environment, environment, environment], # environment
+            [images_to_show[0], images_to_show[1], images_to_show[2], images_to_show[3], images_to_show[4]],
+            [double_length_to_show_0, double_length_to_show_1, double_length_to_show_2, double_length_to_show_3, double_length_to_show_4], # size
+            [0,              0,           0,             0,            0] # count
+        ]
+
+
         #Window properties
         self.setWindowTitle('Recommendations')
-        self.resize(600, 600)
+        self.resize(1500, 700)
+
+        self.setStyleSheet('''
+                           QWidget {
+                               background-color:#CDE0C9;
+                           }
+                           ''')
 
         #Layout
-        layout = QVBoxLayout()
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        #double_garden_size_remaining = round(plant_panel.gardenSizeRemaining, 2)
+
+        plant_panel.header = QLabel(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}", self)
+        plant_panel.header.setFont(QFont('Garamond', 24, QFont.Bold))
+        plant_panel.header.setFixedHeight(100)
+        plant_panel.header.setAlignment(Qt.AlignCenter)
+        plant_panel.header.setStyleSheet('''
+                             QLabel {
+                                 background-color:#D4F4DD;
+                                 color:#556B2F;
+                             }
+                             
+                             ''')
+        
+        layout.addWidget(plant_panel.header)
+
 
         #Add labels to display the environment and garden size
-        layout.addWidget(QLabel(f"Environment: {environment}", self))
-        layout.addWidget(QLabel(f"Garden Measurements: {garden_size}", self))
+        #layout.addWidget(QLabel(f"Environment: {environment}", self))
+        #layout.addWidget(QLabel(f"Garden Measurements: {garden_size}", self))
 
+        NUM_PLANTS = 5
+        
+        plantList = QWidget(self)
+        listLayout = QHBoxLayout(plantList)
+        listLayout.setContentsMargins(0, 0, 0, 0)
+        listLayout.setSpacing(0)
+        plantList.setFixedHeight(480)
+    
+        listOfPlants = []
+        
+        for i in range(NUM_PLANTS):
+            
+            # Main panel - contains all plant info
+            plantPanel = plant_panel(plantList, i, plants[0][i], plants[1][i], plants[3][i], plants[4][i], plants[2][i], plants[5][i])
+            plantPanel.build()
+            listOfPlants.insert(i, plantPanel)
+            listLayout.addWidget(plantPanel)
+
+
+
+        layout.addWidget(plantList)
+        
+        errorWidget = QWidget(self)
+        errorLayout = QVBoxLayout()
+        errorLayout.setContentsMargins(0, 0, 0, 0)
+        errorLayout.setSpacing(0)
+        errorWidget.setFixedHeight(20)
+        
+        
+        plant_panel.errorMsg = QLabel(errorWidget)
+        
+        plant_panel.errorMsg.setFixedHeight(20)
+        plant_panel.errorMsg.setStyleSheet("font-size: 16px; color: red;")
+        plant_panel.errorMsg.setAlignment(Qt.AlignCenter)
+        
+        errorLayout.addWidget(plant_panel.errorMsg)
+        errorWidget.setLayout(errorLayout)
+        
+        
+        
+        layout.addWidget(errorWidget)
+        
+        proceedOptions = QWidget(self)
+        proceedOptionsLayout = QHBoxLayout()
+        proceedOptionsLayout.setAlignment(Qt.AlignCenter)
+        #proceedOptionsLayout.setContentsMargins(100, 0, 0, 0)
+        proceedOptionsLayout.setSpacing(100)
+        proceedOptions.setFixedHeight(100)
+        
+        redoButton = QPushButton("I don't like this selection", proceedOptions)
+        redoButton.setFixedHeight(80)
+        redoButton.setFixedWidth(600)
+        redoButton.setStyleSheet('''
+                                 QPushButton {
+                background-color:#D9534F;  /* yellow background */
+                color: white;               /* White text */
+                border: 2px solid #C03A36;  /* Darker yellow border */
+                border-radius: 12px;        /* Rounded corners */
+                padding: 10px 24px;         /* Padding inside the button */
+                font-size: 24px;            /* Font size */
+            }
+            QPushButton:hover {
+                background-color: #C03A36;  /* Darker yellow when hovered */
+                border: 2px solid #A02824;  /* Darker border when hovered */
+            }
+            QPushButton:pressed {
+                background-color:#A02824;  /* Even darker yellow when pressed */
+                border: 2px solid#801D1A;  /* Darker border when pressed */
+            }
+                                 ''')
+        
+        proceedButton = QPushButton("Proceed to Care Guide", self)
+        proceedButton.setFixedHeight(80)
+        proceedButton.setFixedWidth(600)
+        proceedButton.setStyleSheet('''
+                                    QPushButton {
+            background-color: #4CAF50;  /* Green background */
+            color: white;               /* White text */
+            border: 2px solid #3E8E41;  /* Dark green border */
+            border-radius: 12px;        /* Rounded corners */
+            padding: 10px 24px;         /* Padding inside the button */
+            font-size: 24px;            /* Font size */
+        }
+        QPushButton:hover {
+            background-color: #45a049;  /* Lighter green when hovered */
+            border: 2px solid #3c8033;  /* Darker border when hovered */
+        }
+        QPushButton:pressed {
+            background-color: #2E8B57;  /* Even darker green when pressed */
+            border: 2px solid #2a7030;  /* Darker border when pressed */
+        }
+                                    
+                                    ''')
+        
+        
+        #nahButton.setAlignment(Qt.AlignCenter)
+        proceedOptionsLayout.addWidget(redoButton)
+        proceedOptionsLayout.addWidget(proceedButton)
+        proceedOptions.setLayout(proceedOptionsLayout)
+        layout.addWidget(proceedOptions)
+        
         #Set layout for the main window
         self.setLayout(layout)
-
 
 #Main
 #lauch MyApp method to start GUI procedure 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MyApp()
+    ex = first_window()
     ex.show()
     sys.exit(app.exec_())

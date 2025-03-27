@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Size: small: 0.25-0.5 m, medium: 0.51-0.76 m, large: 1.14-1.4 m-->
+<!--light: low: 4-6 hours indirect, medium: 6-8 hours indirect, high: 8-12 hours direct-->
+<!--collection numbers 0-4 small, collection number 5-9 medium, collection number 10-14 large-->
+<Environment type = "indoor">
+    <collection number = "0">
+        <name>Snake Plant, Spider Plant, Peace lily, ZZ Plant</name>
+            <image>
+            <care>
+                <light>indirect low</light>
+                <water>low, medium</water>
+            </care>
+    </collection>
+    <collection number = "1">
+        <name>Philodendron Brasil, Philodendron Micans, Boston Fern</name>
+            <care>
+                <light>bright indirect</light>
+                <water>medium, high</water>
+            </care>
+    </collection>
+    <collection number = "2">
+        <name>Lucky Bamboo, Dwarf Bamboo, Boston Fern, Peace Lily, Anthurium</name>
+            <care>
+                <light>bright indirect</light>
+                <water>high</water>
+            </care>
+    </collection>
+    <collection number = "3">
+        <name>Purple Shamrock, Haworthia, Peperomia Watermelon, Orchid</name>
+            <care>
+                <light>bright indirect</light>
+                <water>low</water>
+            </care>
+    </collection>
+    <collection number = "4">
+        <name>Echeveria, Aloe Vera, Sedum</name>
+            <care>
+                <light>bright direct</light>
+                <water>low</water>
+            </care>
+    </collection>
+    <collection number = "5">
+        <name>ZZ Plant, Peace Lilly, Snake Plant</name>
+            <care>
+                <light>indirect low</light>
+                <water>low, medium</water>
+            </care>
+    </collection>
+    <collection number = "6">
+        <name>Philodendron Hope, Philodendron Micans Money Tree, Fiddle Leaf Fig</name>
+            <care>
+                <light>bright indirect</light>
+                <water>medium</water>
+            </care>
+    </collection>
+    <collection number = "7">
+        <name>Orchid, Philodendron Xanadu, Hoya</name>
+            <care>
+                <light>bright indirect</light>
+                <water>low</water>
+            </care>
+    </collection>
+    <collection number = "8">
+        <name>Anthurium, Boston Fern, Dwarf Bamboo</name>
+            <care>
+                <light>bright indirect</light>
+                <water>high</water>
+            </care>
+    </collection>
+    <collection number = "9">
+        <name>Aloe Vera, Echeveria, Jade Plant, Sedum</name>
+            <care>
+                <light>bright direct</light>
+                <water>low</water>
+            </care>
+    </collection>
+    <collection number = "10">
+        <name>Mini Monstera, Money Tree, Heavenly Bamboo, Fiddle Leaf Fig, Philodendron Hope</name>
+            <care>
+                <light>bright indirect</light>
+                <water>medium</water>
+            </care>
+    </collection>
+    <collection number = "11">
+        <name>Bird of Paradise, Rubber Plant, Monstera, Corn Plant, Dragon Tree</name>
+            <care>
+                <light>bright indirect</light>
+                <water>medium</water>
+            </care>
+    </collection>
+    <collection number = "12">
+        <name>Jade Plant, Yucca Elephantipes,, Hoya, Philodendron Xanadu</name>
+            <care>
+                <light>bright indirect, bright direct</light>
+                <water>low</water>
+            </care>
+    </collection>
+    <collection number = "13">
+        <name>Black Bamboo, Golden Bamboo, Heavenly Bamboo</name>
+            <care>
+                <light>bright indirect</light>
+                <water>high, medium</water>
+            </care>
+    </collection>
+    <collection number = "14">
+        <name>Pothos, Snake Plant</name>
+            <care>
+                <light>indirect low</light>
+                <water>medium, low</water>
+            </care>
+    </collection>
+</Environment>
