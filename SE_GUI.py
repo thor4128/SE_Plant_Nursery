@@ -281,7 +281,7 @@ class plant_panel(QWidget):
         plant_panel.errorMsg.setText("")
         
         plant_panel.gardenSizeRemaining += self.plantSize
-        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {plant_panel.gardenSizeRemaining}")
+        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}")
         self.count -= 1
         
         self.nameLabel.setText(f"{self.count}x {self.name}")
@@ -335,7 +335,6 @@ class plant_panel(QWidget):
                                  background-color: #D4F4DD;
                                }
                              ''')"""
-        
     
     def build(self):
         #self.panels[i] = plantPanel
@@ -352,9 +351,6 @@ class plant_panel(QWidget):
                             }
                             
                             ''')
-        
-        
-        
         
         # Name panel: Contains name and alias info
         namePanel = QWidget(self)
@@ -395,6 +391,7 @@ class plant_panel(QWidget):
         mainPlantImage.setPixmap(imagePixmap)
         #print(7)
         mainPlantImage.setFixedHeight(200)
+        mainPlantImage.setFixedWidth(300)
         #print(8)
         mainPlantImage.setScaledContents(True)
         #print(9)
@@ -439,9 +436,7 @@ class plant_panel(QWidget):
         galleryLayout.addWidget(gallerySeeMoreOption)
         galleryPanel.setLayout(galleryLayout)
         
-        
         panelLayout.addWidget(galleryPanel)
-        
         
         # Property panel: Contains general property info of each plant
         propertyPanel = QWidget(self)
@@ -465,9 +460,6 @@ class plant_panel(QWidget):
         
         propertyPanel.setLayout(propertyLayout)
         panelLayout.addWidget(propertyPanel)
-        
-        
-        
         
         # Select Button - MUST BE BLUE
         selectPanel = QWidget(self)
@@ -548,8 +540,15 @@ class plant_panel(QWidget):
 #Third pop up window
 #output
 class output_window(QWidget):
+    
+    collection_count = 0
+    collection_limit = 0
+    
     def __init__(self, environment, garden_size, parent=None):
         super().__init__(parent)
+        
+        self.environment = environment
+        self.garden_size = garden_size
 
         #????????????????????????????????????????????????????????????????????????????????????????????????????
         #call c# file to do process
@@ -561,7 +560,7 @@ class output_window(QWidget):
         #parse list from c# file
         #print(list.stdout)
         name_length_care_image_list = list.stdout.split("name:")
-        name_length_care_image_list.pop()
+        #name_length_care_image_list.pop()
         #print(name_care_list)
         
         name_list =   []
@@ -587,7 +586,7 @@ class output_window(QWidget):
         
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         #will need to worry about length section here as well
-            
+        #print(name_list)    
         name_list.pop(0)
         length_list.pop(0)
         care_list.pop(0)
@@ -595,7 +594,7 @@ class output_window(QWidget):
         
         #when using this later just want first 5 entries
         #print(name_list)#name list will be 5 names at index 0, 5 names at index 1 and so on
-        #print("\n")
+        print("\n")
         #print(length_list)
         print("\n")
         print(care_list)#care list will be sunlight, water, design tip
@@ -615,12 +614,15 @@ class output_window(QWidget):
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         #integrating code here
         
-        collection_count = 0
+        output_window.collection_limit = len(name_list) - 1
         
-        names_to_show = name_list[collection_count]
-        length_to_show = length_list[collection_count]
+        if(output_window.collection_count > output_window.collection_limit):
+            output_window.collection_count = 0
+        
+        names_to_show = name_list[self.collection_count]
+        length_to_show = length_list[self.collection_count]
         #just send care no need to show here its next window
-        images_to_show = image_list[collection_count]
+        images_to_show = image_list[self.collection_count]
         
         double_length_to_show_0 = float(length_to_show[0])
         double_length_to_show_1 = float(length_to_show[1])
@@ -637,7 +639,6 @@ class output_window(QWidget):
             [double_length_to_show_0, double_length_to_show_1, double_length_to_show_2, double_length_to_show_3, double_length_to_show_4], # size
             [0,              0,           0,             0,            0] # count
         ]
-
 
         #Window properties
         self.setWindowTitle('Recommendations')
@@ -670,7 +671,6 @@ class output_window(QWidget):
         
         layout.addWidget(plant_panel.header)
 
-
         #Add labels to display the environment and garden size
         #layout.addWidget(QLabel(f"Environment: {environment}", self))
         #layout.addWidget(QLabel(f"Garden Measurements: {garden_size}", self))
@@ -693,8 +693,6 @@ class output_window(QWidget):
             listOfPlants.insert(i, plantPanel)
             listLayout.addWidget(plantPanel)
 
-
-
         layout.addWidget(plantList)
         
         errorWidget = QWidget(self)
@@ -702,7 +700,6 @@ class output_window(QWidget):
         errorLayout.setContentsMargins(0, 0, 0, 0)
         errorLayout.setSpacing(0)
         errorWidget.setFixedHeight(20)
-        
         
         plant_panel.errorMsg = QLabel(errorWidget)
         
@@ -712,8 +709,6 @@ class output_window(QWidget):
         
         errorLayout.addWidget(plant_panel.errorMsg)
         errorWidget.setLayout(errorLayout)
-        
-        
         
         layout.addWidget(errorWidget)
         
@@ -746,6 +741,8 @@ class output_window(QWidget):
             }
                                  ''')
         
+        redoButton.clicked.connect(self.redo)
+        
         proceedButton = QPushButton("Proceed to Care Guide", self)
         proceedButton.setFixedHeight(80)
         proceedButton.setFixedWidth(600)
@@ -769,7 +766,6 @@ class output_window(QWidget):
                                     
                                     ''')
         
-        
         #nahButton.setAlignment(Qt.AlignCenter)
         proceedOptionsLayout.addWidget(redoButton)
         proceedOptionsLayout.addWidget(proceedButton)
@@ -778,6 +774,17 @@ class output_window(QWidget):
         
         #Set layout for the main window
         self.setLayout(layout)
+        
+    def redo(self):
+        output_window.collection_count += 1
+        
+        if(output_window.collection_count > output_window.collection_limit):
+            output_window.collection_count = 0
+        
+        self.close()
+        self.new_window = output_window(self.environment, self.garden_size)
+        self.new_window.show()
+    
 
 #Main
 #lauch MyApp method to start GUI procedure 

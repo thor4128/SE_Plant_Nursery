@@ -4,109 +4,153 @@
 <!--collection numbers 0-4 small, collection number 5-9 medium, collection number 10-14 large-->
 <Environment type = "indoor">
     <collection number = "0">
-        <name>Snake Plant, Spider Plant, Peace lily, ZZ Plant</name>
-            <image>
+        <name>Snake Plant, Spider Plant, Peace Lily, ZZ Plant</name>
+        <length>0.9, 0.6, 0.6, 0.6</length>
             <care>
                 <light>indirect low</light>
                 <water>low, medium</water>
+		<designTip> For a more bold statement garden, snake plant, spider plant, peace lilies, zz plants create a beautiful yet wild look for your space. </designTip>
             </care>
+            <image>"plant_images/Snake Plant.png", "plant_images/Spider Plant.png", "plant_images/Peace Lily.png", "plant_images/ZZ Plant.png"</image>
     </collection>
     <collection number = "1">
         <name>Philodendron Brasil, Philodendron Micans, Boston Fern</name>
+        <length>0.6, 0.6, 0.6</length>
             <care>
                 <light>bright indirect</light>
                 <water>medium, high</water>
+		<designTip> For an understated and elegant touch to your house philodendron brasil, philodendron micans, and boston ferns create a serene yet elevated atmosphere for all to enjoy.</designTip>
             </care>
+            <image>"plant_images/Philodendron Brasil.png", "plant_images/Philodendron Micans.png", "plant_images/Boston Fern.png"</image>
     </collection>
     <collection number = "2">
         <name>Lucky Bamboo, Dwarf Bamboo, Boston Fern, Peace Lily, Anthurium</name>
+        <length>0.3 , 0.6, 0.6, 0.6, 0.6</length>
             <care>
                 <light>bright indirect</light>
                 <water>high</water>
+		<designTip>Bring a touch of the jungle to your living sapce that’ll surely wow your guests with lucky bamboo, dwarf bamboo, boston ferns, peace lilies, and anthuriums.</designTip>
             </care>
+            <image>"plant_images/Lucky Bamboo.png", "plant_images/Dwarf Bamboo.png", "plant_images/Boston Fern.png", "plant_images/Peace Lily.png", "plant_images/Anthurium.png"</image>
     </collection>
     <collection number = "3">
         <name>Purple Shamrock, Haworthia, Peperomia Watermelon, Orchid</name>
+        <length>0.3, 0.3, 0.2, 0.6 </length>
             <care>
                 <light>bright indirect</light>
                 <water>low</water>
+		<designTip>For a living space fit for a monarch purple shamrock, haworthia, peperomia watermelon, and orchids will bloom with vibrant royal purples that will be sure to catch any eye.</designTip>
             </care>
+            <image>"plant_images/Purple Shamrock.png", "plant_images/Haworthia.png", "plant_images/Peperomia Watermelon.png", "plant_images/Orchid.png"</image>
     </collection>
     <collection number = "4">
         <name>Echeveria, Aloe Vera, Sedum</name>
+        <length>0.3, 0.6, 0.6</length>
             <care>
                 <light>bright direct</light>
                 <water>low</water>
+		<designTip>For a space with a pop of color, echeveria, aloe vera, and sedum will bring an array of striking cool toned hues to your day to day life.</designTip>
             </care>
+            <image>"plant_images/Echeveria.png", "plant_images/Aloe Vera.png", "plant_images/Sedum.png"</image>
     </collection>
     <collection number = "5">
         <name>ZZ Plant, Peace Lilly, Snake Plant</name>
+        <length>0.6, 0.6, 0.9</length>
             <care>
                 <light>indirect low</light>
                 <water>low, medium</water>
+		<designTip>For the more traditional gardener, zz plant, peace lilies, and snake plants bring cozy green hues indoors with a touch of fun through their unique leaves and blossoms.</designTip>
             </care>
+            <image>"plant_images/ZZ Plant.png", "plant_images/Peace Lily.png", "plant_images/Snake Plant.png"</image>
     </collection>
     <collection number = "6">
-        <name>Philodendron Hope, Philodendron Micans Money Tree, Fiddle Leaf Fig</name>
+        <name>Philodendron Hope, Philodendron Micans, Money Tree, Fiddle Leaf Fig</name>
+        <length>1.2, 0.6, 0.6, 0.9</length>
             <care>
                 <light>bright indirect</light>
                 <water>medium</water>
+		<designTip>A great set for indoor spaces, with a bit of maintance it will keep your indoor space looking earthy and lively.</designTip>
             </care>
+             <image>"plant_images/Philodendron Hope.png", "plant_images/Philodendron Micans.png", "plant_images/Money Tree.png", "plant_images/Fiddle Leaf Fig.png"</image>
     </collection>
     <collection number = "7">
         <name>Orchid, Philodendron Xanadu, Hoya</name>
+        <length>0.6, 1.2, 0.6</length>
             <care>
                 <light>bright indirect</light>
                 <water>low</water>
+		<designTip>For a more minimalistic approach, orchids, philodendron xanadu, and hoya plants create a nice pop of color that won’t overpower your living space.</designTip>
             </care>
+            <image>"plant_images/Orchid.png", "plant_images/Philodendron Xanadu.png", "plant_images/Hoya.png"</image>
     </collection>
     <collection number = "8">
         <name>Anthurium, Boston Fern, Dwarf Bamboo</name>
+        <length> 0.6, 0.6, 0.6</length>
             <care>
                 <light>bright indirect</light>
                 <water>high</water>
+		<designTip>For the maximalist with a green thumb, anthuriums, boston ferns, and dwarf bamboo are sure not to be outshined by a daring living space and will bring their own energy to your home.</designTip>
             </care>
+            <image>"plant_images/Anthurium.png", "plant_images/Boston Fern.png", "plant_images/Dwarf Bamboo.png"</image>
     </collection>
     <collection number = "9">
         <name>Aloe Vera, Echeveria, Jade Plant, Sedum</name>
+        <length>0.6, 0.3, 0.9, 0.6</length>
             <care>
                 <light>bright direct</light>
                 <water>low</water>
+		<designTip>For the succulent loving home, aloe vera, echeveria, jade plants, and sedum bring lots of variety of color while still maintaining the manageable size of the succulent family.</designTip>
             </care>
+            <image>"plant_images/Aloe Vera.png", "plant_images/Echeveria.png", "plant_images/Jade Plant.png", "plant_images/Sedum.png"</image>
     </collection>
     <collection number = "10">
         <name>Mini Monstera, Money Tree, Heavenly Bamboo, Fiddle Leaf Fig, Philodendron Hope</name>
+        <length> 0.6, 0.6, 0.9, 0.9, 1.2</length>
             <care>
                 <light>bright indirect</light>
                 <water>medium</water>
+		<designTip>For larger spaces with lots of personality, mini monstera, money trees, heavenly bamboo, and philodendron hope are great space fillers with subtle pops of color that’ll be sure to bring larger living spaces a more intimate feel.</designTip>
             </care>
+            <image>"plant_images/Mini Monstera.png", "plant_images/Money Tree.png", "plant_images/Heavenly Bamboo.png", "plant_images/Fiddle Leaf Fid.png", "plant_images/Philodendron Hope.png"</image>
     </collection>
     <collection number = "11">
         <name>Bird of Paradise, Rubber Plant, Monstera, Corn Plant, Dragon Tree</name>
+        <length> 1.0, 1.2, 1.2, 1, 1 </length>
             <care>
                 <light>bright indirect</light>
                 <water>medium</water>
+		<designTip>For the more bohemian style home, bird of paradise, rubber plants, monstera, corn plants, and dragons trees bring a wide variety of foliage to the home that is sure to make your space feel more serene.</designTip>
             </care>
+            <image>"plant_images/Bird of Paradise.png", "plant_images/Rubber Plant.png", "plant_images/Monstera.png", "plant_images/Corn Plant.png", "plant_images/Dragon Tree.png"</image>
     </collection>
     <collection number = "12">
-        <name>Jade Plant, Yucca Elephantipes,, Hoya, Philodendron Xanadu</name>
+        <name>Jade Plant, Yucca Elephantipes, Hoya, Philodendron Xanadu</name>
+        <length>0.9, 1, 0.6, 1.2 </length>
             <care>
                 <light>bright indirect, bright direct</light>
                 <water>low</water>
+		<designTip>This unique garden set brings together the succulent charm of the Jade Plant, the bold stature of Yucca Elephantipes, the waxy cascading vines of Hoya, and the lush, textured leaves of Philodendron Xanadu for a captivating and diverse display of greenery.</designTip>
             </care>
+            <image>"plant_images/Jade Plant.png", "plant_images/Yucca Elephantipes.png", "plant_images/Hoya.png", "plant_images/Philodendron Xanadu.png"</image>
     </collection>
     <collection number = "13">
         <name>Black Bamboo, Golden Bamboo, Heavenly Bamboo</name>
+        <width> 2.0, 2.0, 0.9</width>
             <care>
                 <light>bright indirect</light>
                 <water>high, medium</water>
+		<designTip>For a combines the sleek, dark tones of Black Bamboo, the vibrant golden hues of Golden Bamboo, and the delicate, feathery leaves of Heavenly Bamboo. </designTip>
             </care>
+            <image>"plant_images/Black Bamboo.png", "plant_images/Golden Bamboo.png", "plant_images/Heavenly Bamboo.png"</image>
     </collection>
     <collection number = "14">
         <name>Pothos, Snake Plant</name>
+        <width>0.6, 0.9</width>
             <care>
                 <light>indirect low</light>
                 <water>medium, low</water>
+		<designTip>For a simple yet charming scene the lush, trailing vines of a pothos plant alongside the striking, upright form of a snake plant, creating a harmonious blend of greenery for any space.</designTip>
             </care>
+            <image>"plant_images/Pothos.png", "plant_images/Snake Plant.png"</image>
     </collection>
 </Environment>
