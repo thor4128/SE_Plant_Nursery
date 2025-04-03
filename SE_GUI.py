@@ -5,9 +5,9 @@
 
 import sys
 from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QMessageBox, QDialog, QLabel, QLineEdit, QDialogButtonBox, QComboBox
+    QApplication, QWidget, QVBoxLayout,QHBoxLayout, QPushButton, QMessageBox, QDialog, QLabel, QLineEdit, QDialogButtonBox, QComboBox, QSplashScreen
 )
 import subprocess
 import json
@@ -773,6 +773,18 @@ class output_window(QWidget):
 #lauch first_window method to start GUI procedure 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = first_window()
-    ex.show()
+    
+    splash_pix = QPixmap("logo.png")  
+    splash = QSplashScreen(splash_pix, Qt.WindowStaysOnTopHint)
+    splash.setMask(splash_pix.mask())  
+    splash.show()
+
+    # Create the main window after 3 seconds
+    def start_app():
+        global ex
+        ex = first_window()
+        ex.show()
+        splash.finish(ex)
+
+    QTimer.singleShot(3000, start_app)
     sys.exit(app.exec_())
