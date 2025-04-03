@@ -24,16 +24,18 @@ class first_window(QWidget):
         
     def initUI(self):
         #Window properties
-        self.setWindowTitle('Garden Management App')
-        font = QFont('Verdana', 18, QFont.Bold)  # 'Verdana' font in bold
+        self.setWindowTitle('Plant Planner')
+        font = QFont('Verdana', 22, QFont.Bold)  # 'Verdana' font in bold
         
 
         #self.setGeometry(0, 0, 1800, 800)
-        self.resize(1500,700)
+        self.resize(800,500)
 
         #main_layout = QHBoxLayout()
         #Layout
         layout = QVBoxLayout()
+        
+        self.setStyleSheet("background-color:#D4F4DD; color:#556B2F;")
 
         #Buttons
         btn_input = QPushButton('Input Measurements for New Garden', self)
@@ -44,82 +46,63 @@ class first_window(QWidget):
         btn_update.clicked.connect(self.update_garden)
         btn_update.setFixedSize(700, 250)
         
-        btn_new = QPushButton('Insert New Feature', self)
-        btn_new.clicked.connect(self.update_garden)
-        btn_new.setFixedSize(700, 250)
-        
          # Add buttons to the layout
         layout.addWidget(btn_input)
         layout.addWidget(btn_update)
-        layout.addWidget(btn_new)
         
         # Apply this font to the button
         btn_input.setFont(font)
         btn_update.setFont(font)
-        btn_new.setFont(font)
         
         # Style the buttons using stylesheets
-        btn_input.setStyleSheet("""
-        QPushButton {
-            background-color: #4CAF50;  /* Green background */
-            color: white;               /* White text */
-            border: 2px solid #3E8E41;  /* Dark green border */
-            border-radius: 12px;        /* Rounded corners */
-            padding: 10px 24px;         /* Padding inside the button */
-            font-size: 24px;            /* Font size */
-        }
-        QPushButton:hover {
-            background-color: #45a049;  /* Lighter green when hovered */
-            border: 2px solid #3c8033;  /* Darker border when hovered */
-        }
-        QPushButton:pressed {
-            background-color: #2E8B57;  /* Even darker green when pressed */
-            border: 2px solid #2a7030;  /* Darker border when pressed */
-        }
-    """)
+        btn_input.setStyleSheet(
+        '''
+            QPushButton {
+                background-color: #008CBA;  /* Blue background */
+                color: white;               /* White text */
+                border: 2px solid #007B9A;  /* Darker blue border */
+                border-radius: 12px;        /* Rounded corners */
+                padding: 5px 12px;         /* Padding inside the button */
+                font-size: 16px;            /* Font size */
+            }
+            QPushButton:hover {
+                background-color: #007B9A;  /* Darker blue when hovered */
+                border: 2px solid #005F73;  /* Darker border when hovered */
+            }
+            QPushButton:pressed {
+                background-color: #005F73;  /* Even darker blue when pressed */
+                border: 2px solid #004E5A;  /* Darker border when pressed */
+            }
+        '''
+            
+        )
 
-        btn_update.setStyleSheet("""
-        QPushButton {
-            background-color: #008CBA;  /* Blue background */
-            color: white;               /* White text */
-            border: 2px solid #007B9A;  /* Darker blue border */
-            border-radius: 12px;        /* Rounded corners */
-            padding: 10px 24px;         /* Padding inside the button */
-            font-size: 24px;            /* Font size */
-        }
-        QPushButton:hover {
-            background-color: #007B9A;  /* Darker blue when hovered */
-            border: 2px solid #005F73;  /* Darker border when hovered */
-        }
-        QPushButton:pressed {
-            background-color: #005F73;  /* Even darker blue when pressed */
-            border: 2px solid #004E5A;  /* Darker border when pressed */
-        }
-    """)
+        btn_update.setStyleSheet(
+        '''
+            QPushButton {
+                background-color: #008CBA;  /* Blue background */
+                color: white;               /* White text */
+                border: 2px solid #007B9A;  /* Darker blue border */
+                border-radius: 12px;        /* Rounded corners */
+                padding: 5px 12px;         /* Padding inside the button */
+                font-size: 16px;            /* Font size */
+            }
+            QPushButton:hover {
+                background-color: #007B9A;  /* Darker blue when hovered */
+                border: 2px solid #005F73;  /* Darker border when hovered */
+            }
+            QPushButton:pressed {
+                background-color: #005F73;  /* Even darker blue when pressed */
+                border: 2px solid #004E5A;  /* Darker border when pressed */
+            }
+        '''
+            
+        )
 
-        btn_new.setStyleSheet("""
-        QPushButton {
-            background-color:#FFC72C;  /* yellow background */
-            color: white;               /* White text */
-            border: 2px solid #E0AC25;  /* Darker yellow border */
-            border-radius: 12px;        /* Rounded corners */
-            padding: 10px 24px;         /* Padding inside the button */
-            font-size: 24px;            /* Font size */
-        }
-        QPushButton:hover {
-            background-color: #E0AC25;  /* Darker yellow when hovered */
-            border: 2px solid #E0AC25;  /* Darker border when hovered */
-        }
-        QPushButton:pressed {
-            background-color:#C9921F;  /* Even darker yellow when pressed */
-            border: 2px solid#C9921F;  /* Darker border when pressed */
-        }
-    """) 
 
         # Align the buttons to the top-left of the window
-        layout.setAlignment(btn_input, Qt.AlignTop | Qt.AlignLeft)
-        layout.setAlignment(btn_update, Qt.AlignTop | Qt.AlignLeft)
-        layout.setAlignment(btn_new, Qt.AlignTop | Qt.AlignLeft)
+        layout.setAlignment(btn_input, Qt.AlignCenter | Qt.AlignTop)
+        layout.setAlignment(btn_update, Qt.AlignCenter | Qt.AlignBottom)
         
         # --- Right Side: Image ---
         #image_label = QLabel()
@@ -226,7 +209,7 @@ class garden_dimensions_dialog(QDialog):
         layout = QVBoxLayout(self)
 
         #Label --> text on screen pop up
-        layout.addWidget(QLabel("Enter garden measurements (e.g., 10x20x30):", self))
+        layout.addWidget(QLabel("Enter garden measurements in meters(e.g., 10x20x30):", self))
 
         #Input Field --> what they are inputing 
         self.input_field = QLineEdit(self)
@@ -559,7 +542,7 @@ class output_window(QWidget):
         
         #parse list from c# file
         #print(list.stdout)
-        name_length_care_image_list = list.stdout.split("name:")
+        name_length_care_image_list = list.stdout[1:-2].split("name:")
         #name_length_care_image_list.pop()
         #print(name_care_list)
         
@@ -787,7 +770,7 @@ class output_window(QWidget):
     
 
 #Main
-#lauch MyApp method to start GUI procedure 
+#lauch first_window method to start GUI procedure 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = first_window()
