@@ -130,12 +130,50 @@ class first_window(QWidget):
             
     #need a seperate call to get text selection
     def open_garden_dimensions_dialog(self, enviroment):
+        while True:
+        
         # Open garden dimensions input dialog
-        dialog = garden_dimensions_dialog(self)
+            dialog = garden_dimensions_dialog(self)
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        #error detection needed
-        if dialog.exec_() == QDialog.Accepted:
-            garden_size = dialog.input_field.text()
+            if dialog.exec_() == QDialog.Accepted:
+                garden_size = dialog.input_field.text()
+            else:
+                break
+            
+            #error detection
+            valid_dimensions = True
+            #change chars to lowercase
+            lower_garden_size = garden_size.lower()
+            #split the string into an array of the three dimensions
+            char_array = lower_garden_size.split('x')
+             #check array
+            #print(char_array)
+            #if the array doesn't have 3 dimensions it's invalid
+            if len(char_array) != 3:
+                valid_dimensions = False
+
+             #if any of the dimensions are missing it's invalid
+            for i in char_array:
+             if i == "":
+                valid_dimensions = False
+  
+            #try catch block to see if the 3 dimension values are floats       
+            try:
+                float_array = [float(value) for value in char_array]
+            #if not a float the dimensions are false
+            except ValueError:
+             valid_dimensions = False
+  
+            #need to output a window to the user telling them to enter valid dimensions
+            #need to loop back to enter dimensions again
+                
+            if not valid_dimensions:
+                 #print("The dimensions you entered are invalid, please enter correct values.")
+                 dialog = invalid_dimensions(self)
+                 dialog.exec_() == QDialog.Accepted
+            else:
+                self.load_information_for_output(enviroment, lower_garden_size)
+                break
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             #variables carry over and work
             #need output display now so new class above this
@@ -146,7 +184,7 @@ class first_window(QWidget):
             #)
 #???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
             #in construction
-            self.load_information_for_output(enviroment, garden_size)
+            #self.load_information_for_output(enviroment, garden_size)
             
     #load inputs method for output display
     def load_information_for_output(self, enviroment, garden_size):
@@ -161,6 +199,28 @@ class first_window(QWidget):
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         #update later, now is just a warning box
         QMessageBox.information(self, 'Update Garden', 'Update Me!')      
+
+#invalid dimensions pop up window
+class invalid_dimensions(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+    
+     # Dialog properties
+        self.setWindowTitle("Invalid Dimensions")
+        self.setGeometry(300, 300, 300, 150)
+        
+    # Layout
+        layout = QVBoxLayout(self)
+        
+    #Label --> text on screen pop up
+        layout.addWidget(QLabel("The dimensions that were entered are invalid, please enter valid dimesnions.", self))
+        
+    #Dialog Buttons
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok, self)
+        buttons.accepted.connect(self.accept)
+        layout.addWidget(buttons)
+
+        self.setLayout(layout)
 
 #first pop up 
 class IndoorOutdoorDialog(QDialog):
