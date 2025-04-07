@@ -408,11 +408,11 @@ class plant_panel(QWidget):
         self.nameLabel.setFont(QFont('Garamond', 16, QFont.Bold))
         nameLayout.addWidget(self.nameLabel)
         #print(1)
-        aliasLabel = QLabel(f"(Alias: {self.alias})", namePanel)
-        aliasLabel.setFixedHeight(30)
-        aliasLabel.setFont(QFont('Garamond', 12, QFont.Bold))
-        aliasLabel.setAlignment(Qt.AlignCenter | Qt.AlignTop)
-        nameLayout.addWidget(aliasLabel)
+        #aliasLabel = QLabel(f"(Alias: {self.alias})", namePanel)
+        #aliasLabel.setFixedHeight(30)
+        #aliasLabel.setFont(QFont('Garamond', 12, QFont.Bold))
+        #aliasLabel.setAlignment(Qt.AlignCenter | Qt.AlignTop)
+        #nameLayout.addWidget(aliasLabel)
         #print(2)
         namePanel.setLayout(nameLayout)
         panelLayout.addWidget(namePanel)
@@ -676,7 +676,7 @@ class output_window(QWidget):
         #all fields will always have 5 values make sure xml is structured accordingly
         plants = [
             [names_to_show[0], names_to_show[1], names_to_show[2], names_to_show[3], names_to_show[4]],#name
-            ["delete", "delete", "delete", "delete", "delete"], # altname
+            ["", "", "", "", ""], # altname
             [environment, environment, environment, environment, environment], # environment
             [images_to_show[0], images_to_show[1], images_to_show[2], images_to_show[3], images_to_show[4]],
             [double_length_to_show_0, double_length_to_show_1, double_length_to_show_2, double_length_to_show_3, double_length_to_show_4], # size
