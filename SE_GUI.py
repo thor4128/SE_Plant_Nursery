@@ -128,7 +128,7 @@ class first_window(QWidget):
             environment = dialog.get_selection()
             self.open_garden_dimensions_dialog(environment)     #method call
             
-    #need a seperate call to get text selection
+ #need a seperate call to get text selection
     def open_garden_dimensions_dialog(self, enviroment):
         while True:
         
@@ -152,20 +152,21 @@ class first_window(QWidget):
             if len(char_array) != 3:
                 valid_dimensions = False
 
-             #if any of the dimensions are missing it's invalid
+            #if any of the dimensions are missing it's invalid
             for i in char_array:
-             if i == "":
+             if i == "" or i == " ":
                 valid_dimensions = False
   
             #try catch block to see if the 3 dimension values are floats       
             try:
                 float_array = [float(value) for value in char_array]
+                #make sure the float is not negative
+                for i in float_array:
+                 if i < 0:
+                     valid_dimensions = False
             #if not a float the dimensions are false
             except ValueError:
              valid_dimensions = False
-  
-            #need to output a window to the user telling them to enter valid dimensions
-            #need to loop back to enter dimensions again
                 
             if not valid_dimensions:
                  #print("The dimensions you entered are invalid, please enter correct values.")
@@ -587,6 +588,12 @@ class output_window(QWidget):
     collection_count = 0
     collection_limit = 0
     
+    care_to_show = []
+    listOfPlants = []
+    
+    length_to_show = []
+    name_selected = []
+    
     def __init__(self, environment, garden_size, parent=None):
         super().__init__(parent)
         
@@ -602,7 +609,11 @@ class output_window(QWidget):
         
         #parse list from c# file
         #print(list.stdout)
+        
         name_length_care_image_list = list.stdout[1:-2].split("name:")
+        #print(name_length_care_image_list)
+        #print("\n\n\n\n\n")
+        #print(name_length_care_image_list[1])
         #name_length_care_image_list.pop()
         #print(name_care_list)
         
@@ -637,10 +648,11 @@ class output_window(QWidget):
         
         #when using this later just want first 5 entries
         #print(name_list)#name list will be 5 names at index 0, 5 names at index 1 and so on
-        print("\n")
+        #print("\n")
         #print(length_list)
-        print("\n")
-        print(care_list)#care list will be sunlight, water, design tip
+        #print("\n")
+        #print(image_list)
+        #print(care_list)#care list will be sunlight, water, design tip
         #print("\n")
         #print(image_list)
         #print("\n")
@@ -663,20 +675,22 @@ class output_window(QWidget):
             output_window.collection_count = 0
         
         names_to_show = name_list[self.collection_count]
-        length_to_show = length_list[self.collection_count]
+        output_window.length_to_show = length_list[self.collection_count]
         #just send care no need to show here its next window
+        output_window.care_to_show = care_list[self.collection_count]
         images_to_show = image_list[self.collection_count]
+        double_length_to_show_0 = float(output_window.length_to_show[0])
+        double_length_to_show_1 = float(output_window.length_to_show[1])
+        double_length_to_show_2 = float(output_window.length_to_show[2])
+        double_length_to_show_3 = float(output_window.length_to_show[3])
+        double_length_to_show_4 = float(output_window.length_to_show[4])
         
-        double_length_to_show_0 = float(length_to_show[0])
-        double_length_to_show_1 = float(length_to_show[1])
-        double_length_to_show_2 = float(length_to_show[2])
-        double_length_to_show_3 = float(length_to_show[3])
-        double_length_to_show_4 = float(length_to_show[4])
+        output_window.name_selected = names_to_show
         
         #all fields will always have 5 values make sure xml is structured accordingly
         plants = [
             [names_to_show[0], names_to_show[1], names_to_show[2], names_to_show[3], names_to_show[4]],#name
-            ["", "", "", "", ""], # altname
+            ["delete", "delete", "delete", "delete", "delete"], # altname
             [environment, environment, environment, environment, environment], # environment
             [images_to_show[0], images_to_show[1], images_to_show[2], images_to_show[3], images_to_show[4]],
             [double_length_to_show_0, double_length_to_show_1, double_length_to_show_2, double_length_to_show_3, double_length_to_show_4], # size
@@ -726,14 +740,14 @@ class output_window(QWidget):
         listLayout.setSpacing(0)
         plantList.setFixedHeight(480)
     
-        listOfPlants = []
+        output_window.listOfPlants = []
         
         for i in range(NUM_PLANTS):
             
             # Main panel - contains all plant info
             plantPanel = plant_panel(plantList, i, plants[0][i], plants[1][i], plants[3][i], plants[4][i], plants[2][i], plants[5][i])
             plantPanel.build()
-            listOfPlants.insert(i, plantPanel)
+            output_window.listOfPlants.insert(i, plantPanel)
             listLayout.addWidget(plantPanel)
 
         layout.addWidget(plantList)
@@ -808,7 +822,7 @@ class output_window(QWidget):
         }
                                     
                                     ''')
-        
+        proceedButton.clicked.connect(self.care_guide_init)
         #nahButton.setAlignment(Qt.AlignCenter)
         proceedOptionsLayout.addWidget(redoButton)
         proceedOptionsLayout.addWidget(proceedButton)
@@ -827,7 +841,189 @@ class output_window(QWidget):
         self.close()
         self.new_window = output_window(self.environment, self.garden_size)
         self.new_window.show()
+        
+    def care_guide_init(self):
+        for i in range(5):
+            if self.listOfPlants[i].count > 0:
+                #self.close() this will close the window so I took it out -kp
+                self.care_guide_window = care_guide_window()
+                self.care_guide_window.show()
+                return
+        
+        plant_panel.errorMsg.setText("You didn't select anything, please select a plant to continue")
+
     
+class care_guide_window(QWidget):
+    
+    def __init__(self):# added output_window
+        # supertype initialization
+        super().__init__()
+            
+        # 1500x700, green background
+        self.setFixedWidth(1500)
+        self.setFixedHeight(700)
+        self.setStyleSheet("background-color:#D4F4DD; color:#556B2F;")
+        
+        self.setWindowTitle('Care Guide') #kp added this
+        
+        # full page layout
+        layout = QHBoxLayout()
+        # no margins
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        imagePanel = QWidget(self)
+        # 300x700
+        imagePanel.setFixedWidth(300)
+        imagePanel.setFixedHeight(700)
+        
+        # image panel layout
+        imagePanelLayout = QVBoxLayout()
+        # no margins
+        imagePanelLayout.setContentsMargins(0, 0, 0, 0)
+        imagePanelLayout.setSpacing(0)
+        
+        plantLabelPanel = QWidget(self)
+        # 300x700
+        plantLabelPanel.setFixedWidth(300)
+        plantLabelPanel.setFixedHeight(700)
+        
+        # plant label panel layout
+        plantLabelPanelLayout = QVBoxLayout()
+        # no margins
+        plantLabelPanelLayout.setContentsMargins(0, 0, 0, 0)
+        plantLabelPanelLayout.setSpacing(0)
+        
+        # number of plants that were selected
+        plantCount = 0
+        plantIndices = []
+        length_list = []
+        name_list = []
+        amount_plant = []
+        
+        # loop to determine number of plants selected
+        for i in range(5):
+            if output_window.listOfPlants[i].count > 0:
+                plantCount += 1
+                plantIndices.append(i)
+                holder = float(output_window.length_to_show[i])#holds the lengths of the selected plants
+                length_list.append(holder)
+                name_list.append(output_window.name_selected[i])#holds the names of the selected plants
+
+                
+        #print(length_list)
+        #print(name_list)     
+                
+        # loop to display plant information
+        for i in plantIndices:
+            # plant in list
+            plant = output_window.listOfPlants[i]
+            # add a label+img for it
+            
+            # image
+            plantImg = QLabel(imagePanel)
+            #if there is only 1 type of plant selected, the image will be 300x300 to keep it from being stretched
+            if plantCount == 1:
+                 plantImg.setFixedWidth(300)
+                 plantImg.setFixedHeight(int(300))
+            #the pictures will fill the height of 700 in equal parts     
+            else:  
+                plantImg.setFixedWidth(300)
+                plantImg.setFixedHeight(int(700/plantCount))
+            plantImg.setScaledContents(True)
+            plantPixmap = QPixmap(plant.image)
+            plantImg.setPixmap(plantPixmap)
+            imagePanelLayout.addWidget(plantImg)
+            
+            # label
+            plantLabel = QLabel(plantLabelPanel)
+            plantLabel.setFont(QFont('Garamond', 24))
+            plantLabel.setStyleSheet("font-size: 22px; color: Black;")
+            plantLabel.setStyleSheet
+            plantLabel.setText(f"<b>{plant.count}x</b> {plant.name}")
+            plantLabel.setFixedWidth(300)
+            plantLabel.setFixedHeight(int(700/plantCount))
+            plantLabelPanelLayout.addWidget(plantLabel)
+        
+        
+        #rightmost panel - space remaining, sun, water, care tip
+        
+        # wrapping widget for all remaining collection information
+        collectionInfo = QWidget(self)
+        collectionInfo.setFixedWidth(900)
+        collectionInfo.setFixedHeight(700)
+        collectionInfoLayout = QVBoxLayout()
+        
+        # no margins
+        collectionInfoLayout.setContentsMargins(0, 0, 0, 0)
+        collectionInfoLayout.setSpacing(0)
+        
+        # room remaining widget
+        roomRemainingWidget = QWidget(collectionInfo)
+        roomRemainingWidget.setFixedWidth(900)
+        roomRemainingWidget.setFixedHeight(350)
+        roomRemainingLayout = QVBoxLayout()
+        roomRemainingLayout.setContentsMargins(0, 0, 0, 0)
+        roomRemainingLayout.setSpacing(0)
+        
+        roomRemainingLabel = QLabel(roomRemainingWidget)
+        roomRemainingLabel.setFixedWidth(900)
+        roomRemainingLabel.setFixedHeight(350)
+        roomRemainingLabel.setStyleSheet("font-size: 22px; color: Black;")
+        roomRemainingLabel.setFont(QFont('Garamond', 24))
+        
+        #calculate the number of how many more of each selected plant would fit
+        remainingRoomString = (f"<div style = 'text-align: center;'><b>Size Remaining:</b> You have {round(plant_panel.gardenSizeRemaining, 2)} meters remaining!</div><br><br>")
+        #for loop through the selected plants, calculate the # of plants that could fit, and all that to the remainingRoomString
+        for i in range(len(plantIndices)):
+            amount_plant = plant_panel.gardenSizeRemaining / float(length_list[i])
+            remainingRoomString += (f"<div style='text-align: left;'>You can have <b>{round(amount_plant, 0)}</b> of <b>{name_list[i]}</b>.</div>")
+        #output the remainingRoomString into the roomRemainingLabel part of the care guide
+        roomRemainingLabel.setText(remainingRoomString)
+        
+        roomRemainingLayout.addWidget(roomRemainingLabel)
+        collectionInfoLayout.addWidget(roomRemainingWidget)
+            
+        # care widget
+        careWidget = QWidget(collectionInfo)
+        careWidget.setFixedWidth(900)
+        careWidget.setFixedHeight(350)
+        careLayout = QVBoxLayout()
+        careLayout.setContentsMargins(0, 0, 0, 0)
+        careLayout.setSpacing(0)
+        
+        careLabel = QLabel(careWidget)
+        careLabel.setFixedWidth(900)
+        careLabel.setFixedHeight(350)
+        careLabel.setWordWrap(True)
+        careLabel.setStyleSheet("font-size: 22px; color: Black;")
+        careLabel.setFont(QFont('Garamond'))
+
+        # parse, separate, set label
+        care = output_window.care_to_show.split(", ")
+        sun = care[0]
+        water = care[1]
+        tip = ", ".join(care[2:])
+        careLabel.setText(f"<div style='text-align: center;'><b>Care Information</b></div><br><br><b>Sun Requirement:</b> {sun}<br><br><b>Water Requirement:</b> {water}<br><br><b>Design Tip:</b> {tip}")
+        
+        careLayout.addWidget(careLabel)#, stretch=1)
+        collectionInfoLayout.addWidget(careWidget)
+        
+        #adding boarder colors and setting layouts
+        plantLabelPanel.setStyleSheet("border: 2px solid blue;")
+        imagePanel.setStyleSheet("border: 2px solid blue;")
+        collectionInfo.setStyleSheet("border: 2px solid blue;")
+        
+        plantLabelPanel.setLayout(plantLabelPanelLayout)
+        imagePanel.setLayout(imagePanelLayout)
+        collectionInfo.setLayout(collectionInfoLayout)
+            
+        layout.addWidget(plantLabelPanel)
+        layout.addWidget(imagePanel)
+        layout.addWidget(collectionInfo)
+
+        self.setLayout(layout)
+
 
 #Main
 #lauch first_window method to start GUI procedure 
