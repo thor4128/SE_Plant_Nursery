@@ -30,7 +30,7 @@ class first_window(QWidget):
         
 
         #self.setGeometry(0, 0, 1800, 800)
-        self.resize(800,500)
+        self.setFixedSize(800,550)
 
         #main_layout = QHBoxLayout()
         #Layout
