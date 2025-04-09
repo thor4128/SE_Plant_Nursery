@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
 )
 import subprocess
 import json
+import math
 #import SE_backend.cs
 
 #first window you see
@@ -360,7 +361,7 @@ class plant_panel(QWidget):
         plant_panel.errorMsg.setText("")
         # otherwise do normal stuff
         plant_panel.gardenSizeRemaining -= self.plantSize
-        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}")
+        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)} meters")
 
         self.count += 1
         #print(2)
@@ -490,7 +491,7 @@ class plant_panel(QWidget):
         propertyLayout.setAlignment(Qt.AlignCenter)
         propertyPanel.setFixedHeight(50)
         #print("steve")
-        sizeLabel = QLabel(f"Size: {self.plantSize}", propertyPanel)
+        sizeLabel = QLabel(f"Size: {self.plantSize} m", propertyPanel)
         sizeLabel.setFixedHeight(25)
         sizeLabel.setAlignment(Qt.AlignCenter)
         sizeLabel.setFont(QFont('Garamond', 12, QFont.Bold))
@@ -977,7 +978,8 @@ class care_guide_window(QWidget):
         #for loop through the selected plants, calculate the # of plants that could fit, and all that to the remainingRoomString
         for i in range(len(plantIndices)):
             amount_plant = plant_panel.gardenSizeRemaining / float(length_list[i])
-            remainingRoomString += (f"<div style='text-align: left;'>You can have <b>{round(amount_plant, 0)}</b> of <b>{name_list[i]}</b>.</div>")
+            amount_plant = int(math.floor(amount_plant))
+            remainingRoomString += (f"<div style='text-align: left;'>You can add <b>{round(amount_plant, 0)}</b> of <b>{name_list[i]}</b>.</div>")
         #output the remainingRoomString into the roomRemainingLabel part of the care guide
         roomRemainingLabel.setText(remainingRoomString)
         
