@@ -28,7 +28,6 @@ class first_window(QWidget):
         self.setWindowTitle('Plant Planner')
         font = QFont('Verdana', 22, QFont.Bold)  # 'Verdana' font in bold
         
-
         #self.setGeometry(0, 0, 1800, 800)
         self.setFixedSize(800,550)
 
@@ -176,7 +175,7 @@ class first_window(QWidget):
             else:
                 self.load_information_for_output(enviroment, lower_garden_size)
                 break
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
             #variables carry over and work
             #need output display now so new class above this
             #QMessageBox.information(
@@ -184,7 +183,6 @@ class first_window(QWidget):
                # 'Garden Input',
                # f'Environment: {environment}\nMeasurements: {garden_size}'
             #)
-#???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
             #in construction
             #self.load_information_for_output(enviroment, garden_size)
             
@@ -198,7 +196,7 @@ class first_window(QWidget):
     #update exsisting garden section
     def update_garden(self):
         # Action for "Update Existing Garden" button
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         #update later, now is just a warning box
         QMessageBox.information(self, 'Update Garden', 'Update Me!')      
 
@@ -700,7 +698,7 @@ class output_window(QWidget):
 
         #Window properties
         self.setWindowTitle('Recommendations')
-        self.resize(1500, 700)
+        self.setFixedSize(1500, 700)
 
         self.setStyleSheet('''
                            QWidget {
@@ -981,6 +979,7 @@ class care_guide_window(QWidget):
             amount_plant = int(math.floor(amount_plant))
             remainingRoomString += (f"<div style='text-align: left;'>You can add <b>{round(amount_plant, 0)}</b> of <b>{name_list[i]}</b>.</div>")
         #output the remainingRoomString into the roomRemainingLabel part of the care guide
+        remainingRoomString += ("<div style='text-align: left;'>Revist previous screen to revise selection if desired.</div>")
         roomRemainingLabel.setText(remainingRoomString)
         
         roomRemainingLayout.addWidget(roomRemainingLabel)
