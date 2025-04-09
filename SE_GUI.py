@@ -324,7 +324,7 @@ class plant_panel(QWidget):
         plant_panel.errorMsg.setText("")
         
         plant_panel.gardenSizeRemaining += self.plantSize
-        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}")
+        plant_panel.header.setText(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)} meters")
         self.count -= 1
         
         self.nameLabel.setText(f"{self.count}x {self.name}")
@@ -713,7 +713,7 @@ class output_window(QWidget):
         
         #double_garden_size_remaining = round(plant_panel.gardenSizeRemaining, 2)
 
-        plant_panel.header = QLabel(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)}", self)
+        plant_panel.header = QLabel(f"Here are the plants we've selected -- Room Remaining: {round(plant_panel.gardenSizeRemaining, 2)} meters", self)
         plant_panel.header.setFont(QFont('Garamond', 24, QFont.Bold))
         plant_panel.header.setFixedHeight(100)
         plant_panel.header.setAlignment(Qt.AlignCenter)
