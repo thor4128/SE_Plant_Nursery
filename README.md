@@ -23,10 +23,8 @@ This is a prototype version of an application that recommends plant sets based o
 - Python 3.11 - 3.13 (ensure PyQT5 is supported)
 - pip (make sure its up to date)
 
-- PyQt5:
-'''bash
-    pip install PyQT5
-'''
+- PyQt5: 'pip install PyQT5'
+
 
 ## 3. Project Structure
 
@@ -40,6 +38,7 @@ click buttons make go.
 
 ## 5. Sample XML Snippet
 
+'''xml
 <Environment type="indoor">
     <collection number="0">
         <name>Snake Plant, Spider Plant, Peace Lily, ZZ Plant, Baby Rubber Plant</name>
@@ -52,7 +51,7 @@ click buttons make go.
         <image>"plant_images/Snake Plant.png", "plant_images/Spider Plant.png", "plant_images/Peace Lily.png", "plant_images/ZZ Plant.png", "plant_images/baby_rubber.png"</image>
     </collection>
 </Environment>
-
+'''
 
 ## 6. Future Improvements
 
