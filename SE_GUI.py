@@ -269,7 +269,7 @@ class garden_dimensions_dialog(QDialog):
         layout = QVBoxLayout(self)
 
         #Label --> text on screen pop up
-        layout.addWidget(QLabel("Enter garden measurements in meters(e.g., 10x20x30):", self))
+        layout.addWidget(QLabel("Enter garden measurements in meters. Length, Width, Height (e.g., 10x20x30):", self))
 
         #Input Field --> what they are inputing 
         self.input_field = QLineEdit(self)
@@ -979,7 +979,7 @@ class care_guide_window(QWidget):
             amount_plant = int(math.floor(amount_plant))
             remainingRoomString += (f"<div style='text-align: left;'>You can add <b>{round(amount_plant, 0)}</b> of <b>{name_list[i]}</b>.</div>")
         #output the remainingRoomString into the roomRemainingLabel part of the care guide
-        remainingRoomString += ("<div style='text-align: left;'>Revist previous screen to revise selection if desired.</div>")
+        remainingRoomString += ("<div style='text-align: left;'>Revisit previous screen to revise selection if desired.</div>")
         roomRemainingLabel.setText(remainingRoomString)
         
         roomRemainingLayout.addWidget(roomRemainingLabel)
